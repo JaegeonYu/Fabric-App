@@ -7,7 +7,7 @@ const bodyParser = require('body-parser');
 const app = express();
 app.use(bodyParser.json());
 
-router.get('/api/querySchoolAuth/:info_index', async function (req, res) {
+router.get('/:info_index', async function (req, res) {
     try {
         let start = new Date();
         const ccpPath = path.resolve(__dirname,'..', '..', '..', 'test-network', 'organizations', 'peerOrganizations', 'org1.example.com', 'connection-org1.json');

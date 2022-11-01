@@ -17,7 +17,7 @@ const storage = multer.diskStorage({
         callback(null, './images/');
     },
     filename(req, file, callback) {
-        callback(null, `${file.originalname}`);
+        callback(null, `${file.originalname}.jpg`);
     },
 });
 
@@ -57,7 +57,7 @@ router.post('/', upload.single('photo'), async function (req, res) {
         console.log('state : sigup complete')
         
         res.json({signup : "complete"});
-        //clean(`./images/${req.body.infoid}.jpg`);
+        clean(`./images/${req.body.infoid}.jpg`);
         console.log('state : image delete')
         let finish = new Date();
         console.log("state : Signup runtime : " , finish - start ,'ms');

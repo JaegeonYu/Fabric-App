@@ -16,7 +16,7 @@ const storage = multer.diskStorage({
         callback(null, './images/');
     },
     filename(req, file, callback) {
-        callback(null, `${file.originalname}`);
+        callback(null, `${file.originalname}.jpg`);
     },
 });
 
@@ -75,8 +75,8 @@ router.post('/', upload.single('photo'),async function (req, res) {
           { console.log(`state : matched :: images between are matched success!!!`)
 
               res.status(200).json({what:'matched'});
-              // clean(`./images/${req.body.UserID}.jpg`);
-              // clean(`./images/${req.body.UserID}_block.jpg`);
+              clean(`./images/${req.body.UserID}.jpg`);
+              clean(`./images/${req.body.UserID}_block.jpg`);
               console.log("login USERID : ",req.body.UserID);
               let finish = new Date();
               console.log('state : Images Compare Finish');
@@ -85,8 +85,8 @@ router.post('/', upload.single('photo'),async function (req, res) {
       }else if(dataToSend.includes('no')){
               console.log(`state : unmatched :: images between  are unmateched `);
               res.status(200).json({what:`unmatched`});
-              //clean(`./images/${data.UserID}.jpg`);
-              //clean(`./images/${data.UserId}_block.jpg`);
+              clean(`./images/${data.UserID}.jpg`);
+              clean(`./images/${data.UserId}_block.jpg`);
               console.log('state : Images Compare Finish');
               let finish = new Date();
               console.log('state : Log in runtime',finish - start,'ms');
@@ -103,5 +103,12 @@ router.post('/', upload.single('photo'),async function (req, res) {
         process.exit(1);
     }
 });
+async function clean(file){
+    fs.unlinkSync(file, function(err){
+        if(err){
+            console.log("Error :", err)
+        }
+    })
+}
 
 module.exports = router;

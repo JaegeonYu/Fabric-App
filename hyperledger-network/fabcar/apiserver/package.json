@@ -10,7 +10,7 @@
         "lint": "eslint .",
         "pretest": "npm run lint",
         "test": "nyc mocha --recursive",
-        "start": "node enrollAdmin.js && node registerUser.js && node invoke.js && pm2 start uiserver.js"
+        "start": "node enrollAdmin.js && node registerUser.js && node invoke.js && nodemon app.js"
     },
     "engineStrict": true,
     "author": "Hyperledger",
