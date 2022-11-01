@@ -1,20 +1,16 @@
-
-const express = require('express');
-const bodyParser = require('body-parser');
-
-const multer = require('multer')
-var request = require('request');
-
-// Setting for Hyperledger Fabric
+const express= require('express');
+const router =express.Router();
 const { Gateway,Wallets } = require('fabric-network');
 const path = require('path');
 const fs = require('fs');
-const http= require('http');
+const bodyParser = require('body-parser');
+const app = express();
+app.use(bodyParser.json());
 
-
-exports.queryFingerService = async(infoIndex)=>{
-    try{
-        const ccpPath = path.resolve(__dirname, '..','..', '..', 'test-network', 'organizations', 'peerOrganizations', 'org1.example.com', 'connection-org1.json');
+router.get('/:info_index', async function (req, res) {
+    try {
+        
+        const ccpPath = path.resolve(__dirname,'..', '..', '..', 'test-network', 'organizations', 'peerOrganizations', 'org1.example.com', 'connection-org1.json');
         const ccp = JSON.parse(fs.readFileSync(ccpPath, 'utf8'));
         // Create a new file system based wallet for managing identities.
         const walletPath = path.join(process.cwd(), 'wallet');
@@ -35,9 +31,16 @@ exports.queryFingerService = async(infoIndex)=>{
         const network = await gateway.getNetwork('mychannel');
 
         const contract = network.getContract('fabinfo');
-        return await contract.evaluateTransaction('queryFinger', infoIndex);
-    }catch(error){
-        console.log(error);
-        throw Error(error);
+
+        const result = await contract.evaluateTransaction('queryFinger', req.params.info_index);
+        
+        console.log(`Transaction has been evaluated, result is: ${result.toString()}`);
+        res.status(200).json({response: result.toString()});
+} catch (error) {
+        console.error(`Failed to evaluate transaction: ${error}`);
+        res.status(500).json({error: error});
+        process.exit(1);
     }
-}
+});
+
+module.exports =router;
