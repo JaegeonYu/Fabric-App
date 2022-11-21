@@ -31,3 +31,51 @@
 
 ## 오픈소스 출처
 https://github.com/hyperledger/fabric-samples
+
+## 🚀 기능 목록
+### app.js (apiserver)
+- [x] port open to http request, response
+- [x] route open
+- [x] administrate request
+### app.py (AI apiserver)
+- [x] port open
+- [x] get compare image
+- [x] Image Pretreatment
+    - [x] increase brightness
+    - [x] image resize
+    - [x] image color change to gray
+    - [x] image const change
+    - [x] image fillter with adaptive thresh gaussian
+- [x] compare block chain fingerprint and appliciont fingerprint
+### fabinfo.js (chaincode)
+- [x] query to member sign up 
+- [x] query to get fingerprint image
+- [x] query to get memeber is adult or not
+- [x] query to get memebr's school
+### addInfo.js (Sign up)
+- [x] receive sing up member information
+- [x] if already member, get error response
+- [x] check block chain permission user
+- [x] execute query to member information save block chain
+- [x] response sing up result
+### queryFinger.js
+- [x] check block chain permission user
+- [x] execute query to get fingerprint image at block chain
+- [x] save block chain image to server
+### queryAuth.js
+- [x] check block chain permission user
+- [x] execute query to get member is audlt or not
+- [x] response member age certification
+### querySchool.js
+- [x] check block chain permission user
+- [x] execute query to get member's school
+- [x] response member school certification
+### upload.js (Log in)
+- [x] check block chain permission user
+- [x] receive user's fingerprint and member_id
+- [x] get fingerprint image from block chain 
+- [x] create request AI server to compare image
+- [x] if user correct, after additional certification continue
+- [x] if user uncorrect, create exception response
+- [x] delete fingerprint images
+- [x] response app certification result
